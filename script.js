@@ -37,11 +37,10 @@ var infWindow = new google.maps.InfoWindow();
     animation: google.maps.Animation.DROP
   });
   markers.push(marker);  //pushing the values to the markers.
+  marker.addListener('click' , function(){
+    infWindow.open(this, infWindow);
+  });
 }
 }
 
 //Function to open the infowindow on clicking the marker.
-function popup(marker, infWindow)
-{
-  
-}
