@@ -1,11 +1,41 @@
 function initMap() {
 
 var bangalore = {lat: 12.972442, lng: 77.580643};
+
+var styles = [
+  {
+    featureType: 'water',
+    stylers: [
+      { color: '#19a0d8' }
+    ]
+  },{
+    featureType: 'road.highway',
+    elementType: 'geometry.stroke',
+    stylers: [
+      { color: '#efe9e4' },
+      { lightness: -40 }
+    ]
+  },{
+    featureType: 'water',
+    elementType: 'labels.text.stroke',
+    stylers: [
+      { lightness: 100 }
+    ]
+  },{
+    featureType: 'water',
+    elementType: 'labels.text.fill',
+    stylers: [
+      { lightness: -100 }
+    ]
+  }
+];
+
 var map = new google.maps.Map(document.getElementById('mapspot'), {
   'center' : bangalore,
   //  'center' : latlong;
-  'zoom' : 11,
+  'zoom' : 12,
   'mapTypeId' : google.maps.MapTypeId.ROADMAP,
+  'styles' : styles,
   //'draggable' : false,
   //'scrollwheel' : false
   //'mapTypeControl' : false
