@@ -85,6 +85,7 @@ function hideListings() {
   }
 }
 
+
 function populateInfoWindow(marker, infWindow) {
   // Check to make sure the infowindow is not already opened on this marker.
   if (infWindow.marker != marker) {
@@ -97,6 +98,52 @@ function populateInfoWindow(marker, infWindow) {
     });
   }
 }
+
+/***
+//This function uses the StreetViewService which is not available in India.
+function populateInfoWindow(marker, infWindow) {
+  // Check to make sure the infowindow is not already opened on this marker.
+  if (infWindow.marker != marker) {
+    // Clear the infowindow content to give the streetview time to load.
+    infWindow.setContent('');
+    infWindow.marker = marker;
+    // Make sure the marker property is cleared if the infowindow is closed.
+    infWindow.addListener('closeclick', function() {
+      infWindow.marker = null;
+    });
+    var streetViewService = new google.maps.StreetViewService();
+    var radius = 50;
+    // In case the status is OK, which means the pano was found, compute the
+    // position of the streetview image, then calculate the heading, then get a
+    // panorama from that and set the options
+    function getStreetView(data, status) {
+      if (status == google.maps.StreetViewStatus.OK) {
+        var nearStreetViewLocation = data.location.latLng;
+        var heading = google.maps.geometry.spherical.computeHeading(
+          nearStreetViewLocation, marker.position);
+          infWindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
+          var panoramaOptions = {
+            position: nearStreetViewLocation,
+            pov: {
+              heading: heading,
+              pitch: 30
+            }
+          };
+        var panorama = new google.maps.StreetViewPanorama(
+          document.getElementById('pano'), panoramaOptions);
+      } else {
+        infWindow.setContent('<div>' + marker.title + '</div>' +
+          '<div>No Street View Found</div>');
+      }
+    }
+    // Use streetview service to get the closest streetview image within
+    // 50 meters of the markers position
+    streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+    // Open the infowindow on the correct marker.
+    infWindow.open(map, marker);
+  }
+}
+***/
 
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
